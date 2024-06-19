@@ -1,0 +1,14 @@
+{
+  "poker": {
+    "composite": "♢",
+    "leaf": "♤"
+  },
+  "star": {
+    "composite": "✪",
+    "leaf": "★"
+  },
+  "math": {
+    "composite": "@",
+    "leaf": "#"
+  }
+}

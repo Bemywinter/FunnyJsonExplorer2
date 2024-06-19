@@ -1,0 +1,87 @@
+@startuml
+skinparam linetype ortho
+
+abstract class VisualizerStrategy {
+    - icons
+    + visualize(node, level=0, is_last_child=False)
+    + beautify(result)
+}
+
+abstract class NodeBuilder {
+    + build(data, name="root")
+}
+
+abstract class Node {
+    - name
+    + is_leaf()
+}
+
+' Define concrete classes
+class FjeExplorer {
+    + load_json(file_path)
+    + load_icons(file_path)
+    + parse_arguments()
+}
+
+class TreeIterator {
+    - stack
+    + __iter__()
+    + __next__()
+}
+
+class VisualizerContext {
+    - _strategy : VisualizerStrategy
+    + set_strategy(strategy: VisualizerStrategy)
+    + visualize(node)
+}
+
+class CompositeNodeBuilder {
+    + build(data, name="root")
+}
+
+class TreeDirector {
+    - _builder : NodeBuilder
+    + build_tree(data, name='root')
+}
+
+class CompositeNode {
+    - children
+    + add(node)
+    + is_leaf()
+}
+
+class LeafNode {
+    - value
+    + is_leaf()
+}
+
+class TreeVisualizer {
+    + visualize(node, level=0, is_last_child=False)
+    + beautify(result)
+}
+
+class RectangleVisualizer {
+    + visualize(node, level=0, is_last_child=False)
+    + beautify(result)
+}
+
+class NewVisualizer {
+    + visualize(node, level=0, is_last_child=False)
+    + beautify(result)
+}
+
+' Define relationships
+FjeExplorer -down-> TreeIterator
+TreeIterator -down-> Node
+VisualizerContext -down-> VisualizerStrategy
+VisualizerContext -right-> TreeIterator
+CompositeNodeBuilder -down-> NodeBuilder
+TreeDirector -down-> NodeBuilder
+CompositeNodeBuilder -down-> CompositeNode
+CompositeNode -down-> Node
+LeafNode -down-> Node
+TreeVisualizer -down-> VisualizerStrategy
+RectangleVisualizer -down-> VisualizerStrategy
+NewVisualizer -down-> VisualizerStrategy
+
+@enduml
